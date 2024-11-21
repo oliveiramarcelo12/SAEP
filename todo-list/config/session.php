@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'connection' => env('SESSION_CONNECTION'),
+    'connection' => env('SESSION_CONNECTION'. 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -213,5 +213,6 @@ return [
     */
 
     'partitioned' => env('SESSION_PARTITIONED_COOKIE', false),
+    
 
 ];

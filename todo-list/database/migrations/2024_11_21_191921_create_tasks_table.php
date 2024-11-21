@@ -13,16 +13,20 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relacionamento com User
-            $table->string('descricao');
-            $table->string('nome_do_setor');
-            $table->enum('prioridade', ['baixa', 'media', 'alta']);
-            $table->timestamp('data_de_cadastro')->useCurrent();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('description');
+            $table->string('sector');
+            $table->enum('priority', ['baixa', 'média', 'alta']);
             $table->enum('status', ['a fazer', 'fazendo', 'pronto'])->default('a fazer');
             $table->timestamps();
         });
-        
     }
 
-
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('tasks');
+    }
 };

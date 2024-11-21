@@ -1,107 +1,44 @@
 @extends('layouts.app')
 
-@section('title', 'Lista de Tarefas')
-
 @section('content')
-    <!-- Mensagem de sucesso se houver -->
-    @if(session('success'))
-        <div style="color: green;">
-            {{ session('success') }}
+    <h2>Lista de Tarefas</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>A Fazer</h3>
+            <ul class="list-group">
+                @foreach ($tasks->where('status', 'A Fazer') as $task)
+                    <li class="list-group-item">
+                        <strong>{{ $task->description }}</strong>
+                        <p>Setor: {{ $task->sector }}</p>
+                        <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                    </li>
+                @endforeach
+            </ul>
         </div>
-    @endif
-
-    <h2>Tarefas a Fazer</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Descrição</th>
-            <th>Setor</th>
-            <th>Prioridade</th>
-            <th>Editar</th>
-            <th>Excluir</th>
-        </tr>
-    </thead>
-    <tbody>
-        @forelse($tasks->where('status', 'a fazer') as $task)
-            <tr>
-                <td>{{ $task->description }}</td>
-                <td>{{ $task->sector }}</td>
-                <td>{{ $task->priority }}</td>
-                <td><a href="{{ route('tasks.edit', $task) }}">Editar</a></td>
-                <td>
-                    <form action="{{ route('tasks.destroy', $task) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit">Excluir</button>
-                    </form>
-                </td>
-            </tr>
-        @empty
-            <tr>
-                <td colspan="5">Nenhuma tarefa a fazer.</td>
-            </tr>
-        @endforelse
-    </tbody>
-</table>
-
-
-    <h2>Tarefas em Andamento</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Descrição</th>
-                <th>Setor</th>
-                <th>Prioridade</th>
-                <th>Editar</th>
-                <th>Excluir</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($tasks->where('status', 'fazendo') as $task)
-                <tr>
-                    <td>{{ $task->description }}</td>
-                    <td>{{ $task->sector }}</td>
-                    <td>{{ $task->priority }}</td>
-                    <td><a href="{{ route('tasks.edit', $task) }}">Editar</a></td>
-                    <td>
-                        <form action="{{ route('tasks.destroy', $task) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <h2>Tarefas Concluídas</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Descrição</th>
-                <th>Setor</th>
-                <th>Prioridade</th>
-                <th>Editar</th>
-                <th>Excluir</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($tasks->where('status', 'pronto') as $task)
-                <tr>
-                    <td>{{ $task->description }}</td>
-                    <td>{{ $task->sector }}</td>
-                    <td>{{ $task->priority }}</td>
-                    <td><a href="{{ route('tasks.edit', $task) }}">Editar</a></td>
-                    <td>
-                        <form action="{{ route('tasks.destroy', $task) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+        <div class="col-md-4">
+            <h3>Fazendo</h3>
+            <ul class="list-group">
+                @foreach ($tasks->where('status', 'Fazendo') as $task)
+                    <li class="list-group-item">
+                        <strong>{{ $task->description }}</strong>
+                        <p>Setor: {{ $task->sector }}</p>
+                        <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h3>Pronto</h3>
+            <ul class="list-group">
+                @foreach ($tasks->where('status', 'Pronto') as $task)
+                    <li class="list-group-item">
+                        <strong>{{ $task->description }}</strong>
+                        <p>Setor: {{ $task->sector }}</p>
+                        <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
 @endsection

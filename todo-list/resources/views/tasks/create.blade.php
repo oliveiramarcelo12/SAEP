@@ -1,41 +1,43 @@
 @extends('layouts.app')
 
-@section('title', 'Criar Nova Tarefa')
-
 @section('content')
-    <h2>Criar Nova Tarefa</h2>
-
-    <form action="{{ route('tasks.store') }}" method="POST">
-        @csrf
-
-        <!-- Descrição -->
-        <label for="description">Descrição da Tarefa:</label>
-        <input type="text" id="description" name="description" value="{{ old('description') }}" required>
-        @error('description')
-            <div style="color: red;">{{ $message }}</div>
-        @enderror
-        <br>
-
-        <!-- Setor -->
-        <label for="sector">Setor:</label>
-        <input type="text" id="sector" name="sector" value="{{ old('sector') }}" required>
-        @error('sector')
-            <div style="color: red;">{{ $message }}</div>
-        @enderror
-        <br>
-
-        <!-- Prioridade -->
-        <label for="priority">Prioridade:</label>
-        <select name="priority" id="priority" required>
-            <option value="baixa" {{ old('priority') == 'baixa' ? 'selected' : '' }}>Baixa</option>
-            <option value="média" {{ old('priority') == 'média' ? 'selected' : '' }}>Média</option>
-            <option value="alta" {{ old('priority') == 'alta' ? 'selected' : '' }}>Alta</option>
+<form action="{{ route('tasks.store') }}" method="POST">
+    @csrf
+    <div class="form-group">
+        <label for="user_id">Usuário</label>
+        <select name="user_id" id="user_id" class="form-control" required>
+            @foreach ($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }}</option>
+            @endforeach
         </select>
-        @error('priority')
-            <div style="color: red;">{{ $message }}</div>
-        @enderror
-        <br>
+    </div>
+    <div class="form-group">
+        <label for="description">Descrição</label>
+        <input type="text" name="description" id="description" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="sector">Setor</label>
+        <input type="text" name="sector" id="sector" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="priority">Prioridade</label>
+        <select name="priority" id="priority" class="form-control" required>
+            <option value="baixa">Baixa</option>
+            <option value="média">Média</option>
+            <option value="alta">Alta</option>
+        </select>
+    </div>
+    <div class="form-group">
+    <label for="status">Status</label>
+    <select name="status" id="status" class="form-control" required>
+        <option value="a fazer">A Fazer</option>
+        <option value="fazendo">Fazendo</option>
+        <option value="pronto">Pronto</option>
+    </select>
+</div>
 
-        <button type="submit">Criar Tarefa</button>
-    </form>
+    <button type="submit" class="btn btn-primary">Criar Tarefa</button>
+</form>
+
+
 @endsection
